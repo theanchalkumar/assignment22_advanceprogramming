@@ -1,0 +1,168 @@
+1.
+
+class Smoothie():
+    def __init__(self, ingredients):
+        self.ingredients = ingredients
+        
+    def get_cost(self):
+        cost = {"Strawberries": 1.50,"Banana":0.50,"Mango":2.50,
+                "Blueberries":1.00,"Raspberries":1.00,"Apple1":.75,
+                "Pineapple":3.50}
+        self.total_cost = 0
+        for i in self.ingredients:
+            self.total_cost += cost.get(i)
+            
+        return ("$"+ str('%.2f'%self.total_cost))
+    
+    def get_price(self):
+        x = (1.5*self.total_cost)+self.total_cost
+        
+        return "$"+str(round(x,2))
+    
+    def get_name(self):
+        res = ""
+        for i in sorted(self.ingredients):
+            if i[-1] == "s":
+                res =  res +  i[:-3]+"y "
+            else:
+                res = res + i
+        if len(res) == 1:
+            return res+" Smoothie"
+        else:
+            return res +" Fusion"
+        
+        return res
+    
+s1 = Smoothie(["Banana"])
+print(s1.ingredients)
+print(s1.get_cost())
+print(s1.get_price())
+print(s1.get_name())
+s2 = Smoothie(["Raspberries", "Strawberries", "Blueberries"])
+print(s2.ingredients)
+print(s2.get_cost())
+print(s2.get_price())
+print(s2.get_name())
+
+
+2.
+
+
+import math
+class Testpaper():
+    def __init__(self, subject , markscheme, pass_mark):
+        self.subject = subject
+        self.markscheme = markscheme
+        self.pass_mark = pass_mark
+
+class Student(Testpaper):
+    def __init__(self):
+        self.tests_taken = {}
+        
+    def take_test(self, paper, stud_answer):
+        x = len(paper.markscheme)
+        count = 0
+        for i in range(x):
+            if paper.markscheme[i] == stud_answer[i]:
+                count+=1
+        percent = ((count/x)*100)
+        if int(paper.pass_mark[:-1]) <= percent:
+            self.tests_taken[paper.subject] = "Passed!"+ "("+ str(math.ceil(percent))+"%)"
+        else:
+            self.tests_taken[paper.subject] = "Failed!"+ "("+ str(math.ceil(percent))+"%)"
+
+        return self.tests_taken
+
+paper1 = Testpaper("Maths", ["1A", "2C", "3D", "4A", "5A"], "60%")
+paper2 = Testpaper("Chemistry", ["1C", "2C", "3D", "4A"], "75%")
+paper3 = Testpaper("Computing", ["1D", "2C", "3C", "4B", "5D", "6C", "7A"], "75%")
+
+student1 = Student()
+student2 = Student()
+
+print(student1.tests_taken) 
+student1.take_test(paper1, ["1A", "2D", "3D", "4A", "5A"])
+print(student1.tests_taken)
+student2.take_test(paper2, ["1C", "2D", "3A", "4C"])
+student2.take_test(paper3, ["1A", "2C", "3A", "4C", "5D", "6C", "7B"])
+print(student2.tests_taken )
+
+
+3.
+
+
+
+import datetime
+def manage_delays(t, destination, delay):
+    if destination in t.stations:
+        delay_time = datetime.datetime.strptime(t.arrival, "%H:%M") + datetime.timedelta(minutes = delay)
+        x = str(delay_time.time())
+        t.expected_time = x[:-3]
+        return t.expected_time
+        
+
+class Train:
+    def __init__(self, stations, arrival):
+        self.stations = stations
+        self.arrival = arrival
+        self.expected_time = arrival
+        
+        
+    
+trains = [Train(["Townsville", "Suburbia", "Urbantska"], "13:04"),
+  Train(["Farmsdale", "Suburbia", "Lakeside Valley"], "13:20"),
+  Train(["Suburbia", "Townsville", "Lakeside Valley"], "13:22")]
+    
+for t in trains:
+    manage_delays(t, "Lakeside Valley", 60)
+
+print(trains[0].expected_time)
+print(trains[1].expected_time)
+print(trains[2].expected_time )
+
+
+4.
+
+
+def mine_run(lst_track):
+    right = "-->"
+    left = "<--"
+    count_right = 0
+    count_left = 0
+    for i in lst_track:
+        if i == right:
+            count_right += 1
+        elif i == left:
+            count_left += 1
+    if count_left == count_right:
+        return print(True)
+    else:
+        return print(count_right - count_left-1)
+    
+
+mine_run(["-->", "-->", "-->", "<--", "<--", "<--"]) 
+mine_run(["-->", "<--", "-->", "-->", "<-->", "---"])
+
+
+5.
+
+
+def intersecting(rectangle1, rectangle2):
+    if (rectangle2.y-rectangle1.y == rectangle1.height) or (rectangle2.y-rectangle1.y + rectangle1.height == rectangle2.height):
+        return print(True)
+    else:
+        return print(False)
+
+class Rectangle:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+a = Rectangle(10, 20, 100, 20)
+b = Rectangle(10, 40, 15, 20)
+c = Rectangle(50, 50, 20, 30)
+intersecting(a, b)
+intersecting(a, c)
+intersecting(b, c)
